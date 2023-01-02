@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
+import 'package:ourpass_assessment/widgets/custom.buttom.dart';
 import 'package:ourpass_assessment/widgets/custom.text.field.dart';
 
 class LoginPage extends StatelessWidget {
@@ -22,6 +23,8 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 34.0,),
+
                   Container(
                     alignment: Alignment.center,
                     child: Text(
@@ -62,7 +65,11 @@ class LoginPage extends StatelessWidget {
                     hintText: 'Password',
                     inputType: TextInputType.text,
                     secure: true,
-                  )
+                  ),
+
+                  const SizedBox(height: 16.0,),
+
+                  CustomButton(text: "Sign In", onTap: () { print("Sign IN"); })
                 ],
 
               ),

@@ -12,7 +12,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 2), () {Get.to(const LoginPage());});
+    Timer(const Duration(seconds: 2), () {Get.to(LoginPage());});
 
     return Scaffold(
       backgroundColor: CustomColors.appColor,

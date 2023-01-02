@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
+import 'package:ourpass_assessment/widgets/custom.text.field.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}): super(key: key);
+  LoginPage({Key? key}): super(key: key);
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 30.0,),
+                  const SizedBox(height: 64.0,),
 
                   Text(
                     "Please login here.",
@@ -41,8 +44,27 @@ class LoginPage extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.w300
                     ),
+                  ),
+
+                  const SizedBox(height: 38.0,),
+
+                  CustomTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    inputType: TextInputType.emailAddress,
+                    secure: false,
+                  ),
+
+                  const SizedBox(height: 16.0,),
+
+                  CustomTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    inputType: TextInputType.text,
+                    secure: true,
                   )
                 ],
+
               ),
             ),
           ),

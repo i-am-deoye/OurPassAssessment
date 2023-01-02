@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ourpass_assessment/splash.view.dart';
 
 void main() {
   runApp(const App());
@@ -9,8 +10,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SplashPage(),
+    return const MaterialApp(
+      home: SplashView(),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ourpass_assessment/splash.view.dart';
+import 'package:ourpass_assessment/splash.page.dart';
 
 void main() {
   runApp(const App());
@@ -11,7 +11,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SplashView(),
+      debugShowCheckedModeBanner: false,
+      home: SplashPage(),
     );
   }
 }

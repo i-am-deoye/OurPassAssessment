@@ -9,6 +9,7 @@ import 'package:ourpass_assessment/core/domain/usecases/auth/login.user.dart';
 import 'package:ourpass_assessment/core/domain/usecases/auth/signup.user.dart';
 import 'package:ourpass_assessment/features/auth/auth.viewmodel.dart';
 import 'package:ourpass_assessment/features/auth/signup.page.dart';
+import 'package:ourpass_assessment/home.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/utils/mixins.dart';
 import 'package:ourpass_assessment/widgets/custom.buttom.dart';
@@ -44,13 +45,13 @@ class _LoginPage extends State<LoginPage> with InputValidationMixin, LoaderViewM
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
       showSpinner(context: context);
-      StringError errorMessageIfAvailable = await authViewModel.login(emailController.text.trim(), passwordController.text.trim());
+      ErrorMessage errorMessageIfAvailable = await authViewModel.login(emailController.text.trim(), passwordController.text.trim());
       hideSpinner(context: context);
       if (errorMessageIfAvailable != null) {
         Get.snackbar('', errorMessageIfAvailable);
         return;
       }
-      Get.to(SignupPage());
+      Get.to(const HomePage());
     }
   }
 

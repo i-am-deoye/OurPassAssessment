@@ -1,5 +1,5 @@
 
-typedef StringError = String?;
+typedef ErrorMessage = String?;
 
 class AppException implements Exception {
   final dynamic _message;

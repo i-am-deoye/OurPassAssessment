@@ -8,7 +8,7 @@ import '../../../data/respository/auth.repository.dart';
 
 mixin SignupUseCase {
 
-  Future<StringError> execute(String name, String email, String password) async {
+  Future<ErrorMessage> execute(String name, String email, String password) async {
     // TODO: implement execute
     throw UnimplementedError();
   }
@@ -21,7 +21,7 @@ class DefaultSignupUseCase implements SignupUseCase {
   final IAuthRepository authRepository;
 
   @override
-  Future<StringError> execute(String name, String email, String password) async {
+  Future<ErrorMessage> execute(String name, String email, String password) async {
     return authRepository.create(name, email, password);
   }
 }

@@ -36,11 +36,7 @@ class _SignupPage extends State<SignupPage> with InputValidationMixin {
   void _presentOTPPage() async {
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
-      Get.to(OTPPage(), arguments: [
-        {'name': nameController.text.trim()},
-        {'email': emailController.text.trim()},
-        {'password': passwordController.text.trim()}
-      ]);
+      Get.to(OTPPage(name: nameController.text.trim(), email: emailController.text.trim(), password: passwordController.text.trim(),),);
     }
   }
 

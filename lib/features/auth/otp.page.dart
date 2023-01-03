@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ourpass_assessment/core/data/exception.dart';
+import 'package:ourpass_assessment/home.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/utils/mixins.dart';
+import 'package:ourpass_assessment/widgets/custom.buttom.dart';
 import 'package:ourpass_assessment/widgets/custom.input.otp.dart';
 
 import '../../core/data/respository/auth.repository.dart';
@@ -25,9 +27,9 @@ mixin _ViewBuilderMixin {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InputOtp(controller: firstController, textHint: "1", onEvent: _presentHomePage,),
-          InputOtp(controller: secondController, textHint: "2", onEvent: _presentHomePage),
-          InputOtp(controller: thirdController, textHint: "3", onEvent: _presentHomePage),
+          InputOtp(controller: firstController, textHint: "1", onEvent: (){},),
+          InputOtp(controller: secondController, textHint: "2", onEvent: (){}),
+          InputOtp(controller: thirdController, textHint: "3", onEvent: (){}),
           InputOtp(controller: fourthController, textHint: "4", onEvent: _presentHomePage),
         ],
       ),
@@ -46,23 +48,32 @@ class _Initials {
   }
 }
 
-class _OTPPage extends GetxController {
+class OTPPage extends StatefulWidget {
+  const OTPPage({super.key, required this.name, required this.email, required this.password});
+
+  final String name;
+  final String email;
+  final String password;
+
+
+
+  @override
+  _OTPPage createState() => _OTPPage();
 }
 
-class OTPPage extends _OTPPage with _ViewBuilderMixin, LoaderViewMixin {
+class _OTPPage extends State<OTPPage> with _ViewBuilderMixin, LoaderViewMixin {
   final IAuthViewModel authViewModel = _Initials.initiateVM();
-  final BuildContext context = Get.context!;
 
   void _presentHomePage() async {
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
       showSpinner(context: context);
 
-      final name = Get.arguments[0]['name'] as String;
-      final email = Get.arguments[1]['email'] as String;
-      final password = Get.arguments[2]['password'] as String;
+      final name = widget.name;
+      final email = widget.email;
+      final password = widget.password;
 
-      StringError errorMessageIfAvailable = await authViewModel.create(
+      ErrorMessage errorMessageIfAvailable = await authViewModel.create(
           name,
           email,
           password);
@@ -72,7 +83,7 @@ class OTPPage extends _OTPPage with _ViewBuilderMixin, LoaderViewMixin {
         Get.snackbar('', errorMessageIfAvailable);
         return;
       }
-      Get.to(OTPPage());
+      Get.to(const HomePage());
     }
   }
 
@@ -92,7 +103,7 @@ class OTPPage extends _OTPPage with _ViewBuilderMixin, LoaderViewMixin {
                 const SizedBox(height: 64.0,),
 
                 Text(
-                  "Please enter OTP sent to your email (${Get.arguments}).",
+                  "Please enter OTP sent to your email (${widget.email}).",
                   style: TextStyle(
                       color: CustomColors.textColor,
                       fontSize: 18,
@@ -102,7 +113,9 @@ class OTPPage extends _OTPPage with _ViewBuilderMixin, LoaderViewMixin {
 
                 const SizedBox(height: 38.0,),
 
-                _buildForm()
+                _buildForm(),
+
+                CustomButton(text: "Continue", onTap: _presentHomePage)
               ],
             ),
           ),

@@ -136,9 +136,9 @@ class _SignupPage extends State<SignupPage> with InputValidationMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Don't have an account?"),
+                const Text("Do have an account?"),
                 Text(
-                  "Sign up",
+                  "Sign In",
                   style: TextStyle(
                     color: CustomColors.appColor,
                   ),

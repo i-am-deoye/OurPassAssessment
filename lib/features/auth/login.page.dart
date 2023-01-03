@@ -1,8 +1,12 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:ourpass_assessment/core/data/exception.dart';
+import 'package:ourpass_assessment/core/data/local.cache.dart';
 import 'package:ourpass_assessment/core/data/respository/auth.repository.dart';
 import 'package:ourpass_assessment/core/domain/usecases/auth/auth.usecases.dart';
 import 'package:ourpass_assessment/core/domain/usecases/auth/login.user.dart';
@@ -36,6 +40,76 @@ class _LoginPage extends State<LoginPage> with InputValidationMixin, LoaderViewM
   final formGlobalKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final auth = LocalAuthentication();
+  String authorized = " not authorized";
+  bool _canCheckBiometric = false;
+  late List<BiometricType> _availableBiometric;
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    final isAuthenticated = await LocalCache.getBool(key: LocalCacheKeys.authenticated) ?? false;
+    if (!isAuthenticated) return;
+
+    try {
+      authenticated = await auth.authenticateWithBiometrics(
+          localizedReason: "Scan your finger to authenticate",
+          useErrorDialogs: true,
+          stickyAuth: true);
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (authenticated) {
+      showSpinner(context: context);
+      authViewModel.whenBiometricIsSuccessfull();
+      hideSpinner(context: context);
+    } else {
+      setState(() {
+        authorized =
+        authenticated ? "Authorized success" : "Failed to authenticate";
+        print(authorized);
+      });
+    }
+  }
+
+  Future<void> _checkBiometric() async {
+    bool canCheckBiometric = false;
+
+    try {
+      canCheckBiometric = await auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _canCheckBiometric = canCheckBiometric;
+    });
+  }
+
+  Future _getAvailableBiometric() async {
+    List<BiometricType> availableBiometric = [];
+
+    try {
+      availableBiometric = await auth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    setState(() {
+      _availableBiometric = availableBiometric;
+    });
+  }
+
+  @override
+  void initState() {
+    _checkBiometric();
+    _getAvailableBiometric();
+    _authenticate();
+    super.initState();
+  }
 
   void _presentSignup() {
     Get.to(SignupPage());

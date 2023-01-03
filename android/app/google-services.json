@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1094705560831",
+    "project_id": "pass-assessment",
+    "storage_bucket": "pass-assessment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094705560831:android:1633da4ff5b9b7270b20ca",
+        "android_client_info": {
+          "package_name": "com.example.ourpass_assessment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094705560831-pdb6msnc52n6ni5tgkff6llq76pbea95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-tCg7Bl5qw-2WqJN1pE8-Li1OmU0SVgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094705560831-pdb6msnc52n6ni5tgkff6llq76pbea95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

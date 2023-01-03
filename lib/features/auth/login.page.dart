@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ourpass_assessment/signup.page.dart';
+import 'package:ourpass_assessment/features/signup.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/utils/mixins.dart';
 import 'package:ourpass_assessment/widgets/custom.buttom.dart';

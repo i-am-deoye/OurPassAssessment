@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:ourpass_assessment/otp.page.dart';
+import 'package:ourpass_assessment/features/otp.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/utils/mixins.dart';
 import 'package:ourpass_assessment/widgets/custom.buttom.dart';

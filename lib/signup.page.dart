@@ -1,20 +1,18 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ourpass_assessment/signup.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/widgets/custom.buttom.dart';
 import 'package:ourpass_assessment/widgets/custom.text.field.dart';
+import 'package:get/get.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}): super(key: key);
+class SignupPage extends StatelessWidget {
+  SignupPage({Key? key}): super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-
-  void _presentSignup() {
-    Get.to(SignupPage());
+  void _dismissPage() {
+    Get.back();
   }
 
   @override
@@ -31,23 +29,8 @@ class LoginPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 34.0,),
 
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Pass.Assessment",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: CustomColors.appColor,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 64.0,),
-
                   Text(
-                    "Please login here.",
+                    "Please signup here.",
                     style: TextStyle(
                         color: CustomColors.textColor,
                         fontSize: 18,
@@ -56,6 +39,15 @@ class LoginPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 38.0,),
+
+                  CustomTextField(
+                    controller: emailController,
+                    hintText: 'Full Name',
+                    inputType: TextInputType.emailAddress,
+                    secure: false,
+                  ),
+
+                  const SizedBox(height: 16.0,),
 
                   CustomTextField(
                     controller: emailController,
@@ -75,7 +67,7 @@ class LoginPage extends StatelessWidget {
 
                   const SizedBox(height: 16.0,),
 
-                  CustomButton(text: "Sign In", onTap: () { print("Sign in"); })
+                  CustomButton(text: "Sign Up", onTap: () { print("Sign in"); })
                 ],
               ),
             ),
@@ -90,9 +82,9 @@ class LoginPage extends StatelessWidget {
             children: [
               const Text("Don't have an account?"),
               InkWell(
-                onTap: _presentSignup,
+                onTap: _dismissPage,
                 child: Text(
-                    "Sign up",
+                  "Sign in",
                   style: TextStyle(
                     color: CustomColors.appColor,
                   ),

@@ -15,4 +15,5 @@ class AssetsPath {
   static String getPath(AssetsType assetsType) {
     return _path + assetsType.value;
   }
+
 }

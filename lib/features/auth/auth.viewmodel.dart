@@ -25,11 +25,11 @@ class AuthViewModel implements IAuthViewModel {
 
   @override
   Future<StringError> login(String email, String password) async {
-    return await authUsecase.loginUserUseCase.execute(email, password);
+    return await authUsecase.loginUserUseCase?.execute(email, password);
   }
 
   @override
   Future<StringError> create(String name, String email, String password) async {
-    return await authUsecase.signupUseCase.execute(name, email, password);
+    return await authUsecase.signupUseCase?.execute(name, email, password);
   }
 }

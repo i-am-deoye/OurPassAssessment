@@ -2,8 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ourpass_assessment/core/data/exception.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
+import 'package:ourpass_assessment/utils/mixins.dart';
 import 'package:ourpass_assessment/widgets/custom.input.otp.dart';
+
+import '../../core/data/respository/auth.repository.dart';
+import '../../core/domain/usecases/auth/auth.usecases.dart';
+import '../../core/domain/usecases/auth/signup.user.dart';
+import 'auth.viewmodel.dart';
 
 
 mixin _ViewBuilderMixin {
@@ -30,14 +37,42 @@ mixin _ViewBuilderMixin {
   void _presentHomePage();
 }
 
-class OTPPage extends StatelessWidget with _ViewBuilderMixin {
-  OTPPage({Key? key}): super(key: key);
+class _Initials {
+  static IAuthViewModel initiateVM() {
+    final IAuthRepository authRepository = AuthRepository();
+    final SignupUseCase signupUseCase = DefaultSignupUseCase(authRepository: authRepository);
+    final AuthUsecase authUsecase = AuthUsecase(signupUseCase: signupUseCase);
+    return AuthViewModel(authUsecase: authUsecase);
+  }
+}
 
-  @override
-  void _presentHomePage() {
+class _OTPPage extends GetxController {
+}
+
+class OTPPage extends _OTPPage with _ViewBuilderMixin, LoaderViewMixin {
+  final IAuthViewModel authViewModel = _Initials.initiateVM();
+  final BuildContext context = Get.context!;
+
+  void _presentHomePage() async {
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
+      showSpinner(context: context);
 
+      final name = Get.arguments[0]['name'] as String;
+      final email = Get.arguments[1]['email'] as String;
+      final password = Get.arguments[2]['password'] as String;
+
+      StringError errorMessageIfAvailable = await authViewModel.create(
+          name,
+          email,
+          password);
+      hideSpinner(context: context);
+
+      if (errorMessageIfAvailable != null) {
+        Get.snackbar('', errorMessageIfAvailable);
+        return;
+      }
+      Get.to(OTPPage());
     }
   }
 
@@ -77,3 +112,4 @@ class OTPPage extends StatelessWidget with _ViewBuilderMixin {
     );
   }
 }
+

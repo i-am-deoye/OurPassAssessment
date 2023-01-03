@@ -19,8 +19,7 @@ class _Initials {
   static IAuthViewModel initiateVM() {
     final IAuthRepository authRepository = AuthRepository();
     final LoginUserUseCase loginUserUseCase = DefaultLoginUserUseCase(authRepository: authRepository);
-    final SignupUseCase signupUseCase = DefaultSignupUseCase(authRepository: authRepository);
-    final AuthUsecase authUsecase = AuthUsecase(loginUserUseCase: loginUserUseCase, signupUseCase: signupUseCase);
+    final AuthUsecase authUsecase = AuthUsecase(loginUserUseCase: loginUserUseCase);
     return AuthViewModel(authUsecase: authUsecase);
   }
 }
@@ -30,7 +29,7 @@ class LoginPage extends StatefulWidget {
   _LoginPage createState() => _LoginPage();
 }
 
-class _LoginPage extends State<LoginPage> with InputValidationMixin {
+class _LoginPage extends State<LoginPage> with InputValidationMixin, LoaderViewMixin {
   final IAuthViewModel authViewModel = _Initials.initiateVM();
 
   final formGlobalKey = GlobalKey<FormState>();
@@ -44,7 +43,9 @@ class _LoginPage extends State<LoginPage> with InputValidationMixin {
   void _presentHomePage() async {
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
-      StringError errorMessageIfAvailable = await authViewModel.login("email", "password");
+      showSpinner(context: context);
+      StringError errorMessageIfAvailable = await authViewModel.login(emailController.text.trim(), passwordController.text.trim());
+      hideSpinner(context: context);
       if (errorMessageIfAvailable != null) {
         Get.snackbar('', errorMessageIfAvailable);
         return;

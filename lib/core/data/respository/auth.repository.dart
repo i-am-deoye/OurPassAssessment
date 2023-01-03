@@ -16,8 +16,9 @@ class AuthRepository with BaseRemoteRepository implements IAuthRepository {
   Future<StringError> signIn(String email, String password) async {
     try {
       await authInstance.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (_, ex) {
-      return ex.toString();
+    } on FirebaseAuthException catch (ex) {
+      print(ex.toString());
+      return ex.message;
     }
   }
   
@@ -26,8 +27,8 @@ class AuthRepository with BaseRemoteRepository implements IAuthRepository {
     try {
       UserCredential credential =  await authInstance.createUserWithEmailAndPassword(email: email, password: password);
       credential.user?.updateDisplayName(name);
-    } on FirebaseAuthException catch (_, ex) {
-      return ex.toString();
+    } on FirebaseAuthException catch (ex) {
+      return ex.message;
     }
   }
 }

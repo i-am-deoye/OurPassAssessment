@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:ourpass_assessment/core/data/exception.dart';
+import 'package:ourpass_assessment/features/auth/auth.viewmodel.dart';
 import 'package:ourpass_assessment/features/auth/otp.page.dart';
 import 'package:ourpass_assessment/utils/custom.colors.dart';
 import 'package:ourpass_assessment/utils/mixins.dart';
@@ -8,8 +10,20 @@ import 'package:ourpass_assessment/widgets/custom.buttom.dart';
 import 'package:ourpass_assessment/widgets/custom.text.field.dart';
 import 'package:get/get.dart';
 
-class SignupPage extends StatelessWidget with InputValidationMixin {
-  SignupPage({Key? key}): super(key: key);
+import '../../core/data/respository/auth.repository.dart';
+import '../../core/domain/usecases/auth/auth.usecases.dart';
+import '../../core/domain/usecases/auth/login.user.dart';
+import '../../core/domain/usecases/auth/signup.user.dart';
+
+
+class SignupPage extends StatefulWidget {
+  @override
+  _SignupPage createState() => _SignupPage();
+}
+
+class _SignupPage extends State<SignupPage> with InputValidationMixin {
+
+
   final formGlobalKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -19,10 +33,14 @@ class SignupPage extends StatelessWidget with InputValidationMixin {
     Get.back();
   }
 
-  void _presentOTPPage() {
+  void _presentOTPPage() async {
     if (formGlobalKey.currentState?.validate() ?? false) {
       formGlobalKey.currentState?.save();
-      Get.to(OTPPage(), arguments: emailController.text);
+      Get.to(OTPPage(), arguments: [
+        {'name': nameController.text.trim()},
+        {'email': emailController.text.trim()},
+        {'password': passwordController.text.trim()}
+      ]);
     }
   }
 
